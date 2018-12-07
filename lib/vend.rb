@@ -11,7 +11,12 @@ class Vend
 
   def load_machine
     @incoming.each do |slot|
-      Slot.new(slot["cost"])
+      slot_in = Slot.new(slot.first.to_sym, slot[1]["cost"], slot[1]["capacity"])
+      slot[1]["contents"].each do |snack|
+        snack_in = Snack.new(snack["type"])
+        @slot << snack_in
+      end
+      @machine.add_slot(slot_in)
     end
   end
 
